@@ -1,26 +1,24 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <bbd-layout></bbd-layout>
   </div>
 </template>
 
 <script>
-
+import bbdLayout from '@/components/layout/index.vue'
 export default {
   name: 'App',
   components: {
-    
+    bbdLayout
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+@import './style/base.scss';
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  // font-family: Avenir, Helvetica, Arial, sans-serif;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
 }
 </style>

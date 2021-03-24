@@ -13,6 +13,11 @@ import { Message } from 'element-ui' //局部引入UI框架组件
 //   axios.defaults.baseURL = 'https://apis.seajc.com/36client' // 生产环境
 // }
 
+
+//引入nprogress
+import NProgress from 'nprogress' // 进度条
+import 'nprogress/nprogress.css' //这个样式必须引入
+
 axios.defaults.baseURL = 'http://139.9.150.10:9876/dv/'
 
 // 请求超时时间
@@ -26,6 +31,7 @@ axios.interceptors.request.use(
       'Content-Type': 'application/json',
       // 'token': store.state.userInfo.token
     }
+    NProgress.start()
     return config;
   },
   error => {
@@ -37,9 +43,14 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   // 服务码是200的情况
   response => {
-    if (response.data.status_code === 200) {
-        return Promise.resolve(response);
+    NProgress.done()
+    if (response.data.status_code === 100) {
+      return Promise.resolve(response);
     } else {
+      Message({
+        message: response.data.error_msg,
+        type: 'error',
+      });
       return Promise.reject(response)
     }
   },
