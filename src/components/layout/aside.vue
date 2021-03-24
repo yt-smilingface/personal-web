@@ -89,7 +89,7 @@ export default {
   }
   
   .el-menu {
-    border-right: none;
+    border-right: none !important;
   }
 
 </style>

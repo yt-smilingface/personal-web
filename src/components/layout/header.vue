@@ -5,13 +5,14 @@
       @click="switchChange"></span>
 
     <el-color-picker
+      style="display: inline-block;margin-right: 20px;vertical-align: -16px;"
       v-model="primaryColor"
       show-alpha
       :predefine="predefineColors"
       @change="colorChange">
     </el-color-picker>
     <el-dropdown>
-      <span class="el-dropdown-link">
+      <span style="color: #fff;cursor: pointer;">
         下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
@@ -61,20 +62,22 @@ export default {
     
   },
   methods: {
-
     // 开关打开关闭
     switchChange() {
       if(this.switchSide) {
         this.switchSide = false
         this.$store.commit('isMenuCollapse',false)
+        this.$cookie.set('isMenuCollapse', false)  //缓存左侧菜单状态
       } else {
         this.switchSide = true
         this.$store.commit('isMenuCollapse', true)
+        this.$cookie.set('isMenuCollapse', true)  //缓存左侧菜单状态
       }   
     },
 
     // 主题确认
     colorChange(data) {
+      this.$cookie.set('primaryColor', data)  //缓存主题颜色
       this.$store.commit('primaryColor',data)
     }
   }
@@ -83,11 +86,12 @@ export default {
 
 <style scoped lang="scss">
   .bbd-header {
-    margin-top: 16px;
+    line-height: 60px;
     text-align: right;
   }
   .bbd-brn-switch {
     float: left;
+    margin-top: 16px;
     display: inline-block;
     font-size: 30px;
     color: #fff;
