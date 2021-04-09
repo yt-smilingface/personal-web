@@ -11,9 +11,17 @@
         <el-header :style="{'background-color': primaryColor}">
           <bbd-header></bbd-header>
         </el-header>
-        <el-container>
-          <el-main>Main</el-main>
-          <el-footer>Footer</el-footer>
+        <el-container style="height: calc(100% - 20px);overflow:auto;">
+          <el-main>
+            <el-breadcrumb style="margin-bottom: 20px;" separator="/">
+              <el-breadcrumb-item :to="{ path: '/home' }"><i class="el-icon-s-home"></i> 首页</el-breadcrumb-item>
+              <el-breadcrumb-item>{{breadcrumbItem == '' ? '首页' : breadcrumbItem}}</el-breadcrumb-item>
+            </el-breadcrumb>
+            <router-view></router-view>
+          </el-main>
+          <el-footer class="bbd-footer">
+            运营单位：云南数联铭信科技有限公司 滇ICP备00000000 客服热线：400-803-0095
+          </el-footer>
         </el-container>
       </el-container>
     </el-container>
@@ -30,6 +38,7 @@ export default {
   data() {
     return {
       // sideWidth: '250px',  //左侧菜单宽度
+      breadcrumbItem: '',
     }
   },
   computed: {
@@ -47,8 +56,13 @@ export default {
       }
     }
   },
+  watch: {
+    $route: function(data) {
+      this.breadcrumbItem = data.meta.name
+    }
+  },
   mounted() {
-    // console.dir(this.switchSide)
+    
   },
   methods: {
     
@@ -64,9 +78,16 @@ export default {
     width: 100%;
     height: 100%;
   }
-
   .el-container {
     height: 100%;
+  }
+
+  .bbd-footer {
+    height: auto !important;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
   }
 
 </style>

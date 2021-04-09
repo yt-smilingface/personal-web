@@ -17,6 +17,13 @@ Vue.prototype.$post = post
 import jsCookie from 'js-cookie'  
 Vue.prototype.$cookie = jsCookie
 
+// echart图表
+import ECharts from "vue-echarts";
+Vue.component('v-chart', ECharts)
+// 图表基础数据
+import EchartsOptions from './utils/echarts'
+Vue.prototype.$EchartsOptions = EchartsOptions
+
 
 
 Vue.config.productionTip = false

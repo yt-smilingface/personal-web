@@ -15,14 +15,14 @@ export default {
   },
   methods: {
     loginClick() {
-      let params = {
-        username: 'pulihe',
-        password: '123456'
-      }
-      this.$post('login',params).then(res => {
-        console.log(res)
+      // let params = {
+      //   username: 'pulihe',
+      //   password: '123456'
+      // }
+      // this.$post('login',params).then(res => {
+        // console.log(res)
         this.$router.push({name: 'home'})
-      })
+      // })
     }
   }
 }

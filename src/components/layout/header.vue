@@ -4,23 +4,35 @@
       class="bbd-brn-switch"
       @click="switchChange"></span>
 
+    <el-badge :value="12" class="bbd-notice-item">
+      <i class="el-icon-bell"></i>
+    </el-badge>
     <el-color-picker
-      style="display: inline-block;margin-right: 20px;vertical-align: -16px;"
+      style="display: inline-block;margin-right: 20px;vertical-align: -10px;"
       v-model="primaryColor"
-      show-alpha
+      size="mini"
       :predefine="predefineColors"
       @change="colorChange">
     </el-color-picker>
-    <el-dropdown>
-      <span style="color: #fff;cursor: pointer;">
-        下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+    <!-- <el-dropdown trigger="hover" :hide-on-click="false">
+      <span style="margin-right: 20px;color: #fff;cursor: pointer;">
+        主题设置<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>黄金糕</el-dropdown-item>
-        <el-dropdown-item>狮子头</el-dropdown-item>
-        <el-dropdown-item>螺蛳粉</el-dropdown-item>
-        <el-dropdown-item>双皮奶</el-dropdown-item>
-        <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+        <el-dropdown-item command="0">背景颜色</el-dropdown-item>
+        <el-dropdown-item command="1">文字颜色</el-dropdown-item>
+        <el-dropdown-item command="2">菜单选中</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown> -->
+    <el-dropdown trigger="hover" @command="commandChange">
+      <span style="color: #fff;cursor: pointer;">
+        admin<i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command="0">个人中心</el-dropdown-item>
+        <el-dropdown-item command="1">修改密码</el-dropdown-item>
+        <el-dropdown-item command="2">主题设置</el-dropdown-item>
+        <el-dropdown-item command="3" divided>退出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -33,20 +45,13 @@ export default {
   data() {
     return {
       predefineColors: [
-        '##409eff',
+        '#409eff',
         '#ff8c00',
         '#ffd700',
         '#90ee90',
         '#00ced1',
         '#1e90ff',
         '#c71585',
-        'rgba(255, 69, 0, 0.68)',
-        'rgb(255, 120, 0)',
-        'hsv(51, 100, 98)',
-        'hsva(120, 40, 94, 0.5)',
-        'hsl(181, 100%, 37%)',
-        'hsla(209, 100%, 56%, 0.73)',
-        '#c7158577'
       ]
     }
   },
@@ -66,19 +71,26 @@ export default {
     switchChange() {
       if(this.switchSide) {
         this.switchSide = false
+        localStorage.setItem('isMenuCollapse',false)  //缓存左侧菜单状态
         this.$store.commit('isMenuCollapse',false)
-        this.$cookie.set('isMenuCollapse', false)  //缓存左侧菜单状态
       } else {
         this.switchSide = true
+        localStorage.setItem('isMenuCollapse',true)  //缓存左侧菜单状态
         this.$store.commit('isMenuCollapse', true)
-        this.$cookie.set('isMenuCollapse', true)  //缓存左侧菜单状态
       }   
     },
 
     // 主题确认
     colorChange(data) {
-      this.$cookie.set('primaryColor', data)  //缓存主题颜色
+      localStorage.setItem('primaryColor',data)  //缓存主题颜色
       this.$store.commit('primaryColor',data)
+    },
+
+    // 下拉菜单点击
+    commandChange(data) {
+      if(data == '3') {
+        this.$router.push('/')
+      }
     }
   }
 }
@@ -96,5 +108,16 @@ export default {
     font-size: 30px;
     color: #fff;
     cursor: pointer
+  }
+
+  // 消息通知
+  .bbd-notice-item {
+    margin-right: 40px;
+    line-height: 30px;
+    cursor: pointer;
+    i {
+      font-size: 20px;
+      color: #fff;
+    }
   }
 </style>

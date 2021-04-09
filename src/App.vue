@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <bbd-layout></bbd-layout>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import bbdLayout from '@/components/layout/index.vue'
+
 export default {
   name: 'App',
   components: {
-    bbdLayout
+    
   }
 }
 </script>
